@@ -10,7 +10,7 @@ This is a simple Codeigniter 3 CRUD API project for managing a collection of boo
 - Delete a students (DELETE `/api/students/{id}`)
 
 ## Requirements
-- PHP 7.4 or higher
+- PHP 7.4
 - Composer
 - Codeigniter 3
 - MySQL or MariaDB
@@ -19,121 +19,146 @@ This is a simple Codeigniter 3 CRUD API project for managing a collection of boo
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/adjisdhani/simple-api-crud-lumen8.git
+   git clone https://github.com/adjisdhani/simple-api-crud-ci3.git
    ```
 
 2. **Navigate to the project directory**:
    ```bash
-   cd simple-api-crud-lumen8
+   cd simple-api-crud-ci3
    ```
 
-3. **Install dependencies**:
+3. **Configuration your database (application/database.php)**:
    ```bash
-   composer install
+	   $db['default'] = array(
+		'dsn'	=> '',
+		'hostname' => 'localhost',
+		'username' => 'yourusername',
+		'password' => 'yourpassword',
+		'database' => 'simple_api_crud_ci3',
+		'dbdriver' => 'mysqli',
+		'dbprefix' => '',
+		'pconnect' => FALSE,
+		'db_debug' => (ENVIRONMENT !== 'production'),
+		'cache_on' => FALSE,
+		'cachedir' => '',
+		'char_set' => 'utf8',
+		'dbcollat' => 'utf8_general_ci',
+		'swap_pre' => '',
+		'encrypt' => FALSE,
+		'compress' => FALSE,
+		'stricton' => FALSE,
+		'failover' => array(),
+		'save_queries' => TRUE
+	);
    ```
 
-4. **Configure the .env file**:
+4. **Set your baseurl for routing (application/config)**:
    ```bash
-   DB_CONNECTION=mysql
-	DB_HOST=127.0.0.1
-	DB_PORT=3306
-	DB_DATABASE=simple_api_crud_lumen8
-	DB_USERNAME=root
-	DB_PASSWORD=yourpassword
+    $config['base_url'] = 'http://localhost/simple-api-crud-ci3/';
    ```
 
-5. **Run the database migrations**:
+5. **Set your autoload (application/config/autoload.php)**:
    ```bash
-    php artisan migrate
+    $autoload['helper'] = array('url');
+    $autoload['libraries'] = array('database');
    ```
 
-6. **Start the development server**:
+6. **Create Table in your databases**:
    ```bash
-    php artisan serve
+    CREATE TABLE students (
+	    id INT AUTO_INCREMENT PRIMARY KEY,
+	    NAME VARCHAR(100) NOT NULL,
+	    student_number VARCHAR(20) NOT NULL UNIQUE,
+	    major VARCHAR(100) NOT NULL
+	);
    ```
 
 7. **Access the API**:
-   (http://127.0.0.1:8000/api/posts)
+   (http://localhost/simple-api-crud-ci3/)
 
       ## API Endpoints 
     
-    **1. Get All content**
+    **1. Get All students**
 
     - Method: GET
-    - Endpoint: /api/posts
+    - Endpoint: /api/students
     - Description: Retrieve a list of all content.
 
     **Example Response**:
    ```bash
    [
 	    {
-         "id": 1,
-         "title": "Data Title 1",
-         "content": "Data Content 1"
-        }
+	        "id": 1,
+	        "name": "Data 1",
+	        "student_number": "9999",
+	        "major": "Information Systems"
+	    }
 
 	]
    ```
     
-    **2. Get a Single Content by ID**
+    **2. Get a Single student by ID**
     
     - Method: GET
-    - Endpoint: /api/posts/{id}
-    - Description: Retrieve a single content by its ID.
+    - Endpoint: /api/students/{id}
+    - Description: Retrieve a single student by its ID.
 
     **Example Response**:
    ```bash
    [
 	    {
-         "id": 1,
-         "title": "Data Title 1",
-         "content": "Data Content 1"
-      }
+	        "id": 1,
+	        "name": "Data 1",
+	        "student_number": "9999",
+	        "major": "Information Systems"
+	    }
 	]
    ```
     
-    **3. Create a New Content**
+    **3. Create a New student**
     
     - Method: POST
-    - Endpoint: /api/posts
+    - Endpoint: /api/students
     - <b>Body Parameters:</b>
-      1. title (string, required)
-      2. content (string, required)
+      1. name (string, required)
+      2. student_number (string, required)
+      3. major (string, required)
 
     **Example Request**:
     ```bash
     [
         {
-         "title": "Data Title 2",
-         "content": "Data Content 2"
-      }
+		    "name": "Data 2",
+		    "student_number": "99992",
+		    "major": "Information Systems 2"
+		}
     ]
     ```
     **Example Response**:
    ```bash
    [
 	    {
-         "id": 2,
-         "title": "Data Title 2",
-         "content": "Data Content 2"
-      }
+		    "message": "Student added successfully"
+		}
 	]
    ```
     **4. Update a Content**
     
     - Method: PUT
-    - Endpoint: /api/posts/{id}
+    - Endpoint: /api/students/{id}
     - <b>Body Parameters:</b>
-      1. title (string, required)
-      2. content (string, required)
+      1. name (string, required)
+      2. student_number (string, required)
+      3. major (string, required)
 
     **Example Request**:
    ```bash
    [
 	    {
-         "title": "Data Title 2 Update",
-         "content": "Data Content 2 Update"
-      }
+		    "name": "Data 2 (Update)",
+		    "student_number": "999920",
+		    "major": "Information Systems 2 (Update)"
+		}
 
 	]
    ```
@@ -141,23 +166,21 @@ This is a simple Codeigniter 3 CRUD API project for managing a collection of boo
    ```bash
    [
 	    {
-         "id": 2,
-         "title": "Data Title 2 Update",
-         "content": "Data Content 2 Update"
-      }
+		    "message": "Student updated successfully"
+		}
 	]
    ```
     **4. Delete a Content**
     
     - Method: DELETE
-    - Endpoint: /api/posts/{id}
+    - Endpoint: /api/students/{id}
     
     **Example Response**:
    ```bash
    [
 	    {
-            "message": "Content deleted successfully"
-        }
+		    "message": "Student deleted successfully"
+		}
 	]
    ```
     ## Author
